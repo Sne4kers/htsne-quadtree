@@ -4,14 +4,10 @@ import tree
 import numpy as np
 
 # Random testing
-my_tree = tree.PyInfinityQuadTree()
-print(my_tree.get_nodes())
-
-print(dir(my_tree))
 
 
 # generate points
-n = 500
+n = 10000
 
 points = []
 for i in range(n):
@@ -23,8 +19,8 @@ for i in range(n):
     points.append((x, y))
 
 # make the tree
-my_tree.build_tree(points, -1, -1, 1, 1)
-
+my_tree = tree.PyInfinityQuadTree(points)
+print(dir(my_tree))
 print(my_tree.get_nodes())
 
 # Prepare  the plot
@@ -46,13 +42,16 @@ ax.add_patch(pdisk)
 for p in points:
     ax.scatter(p[0], p[1], color="g", s=5)
 
+selected_depth = 1
+
 for i in my_tree.get_nodes():
-    print("something")
     if i["is_leaf"]:
-        color = "b"
-    else:
         color = "r"
-    rect = patches.Rectangle((i["min_bounds"][0], i["min_bounds"][1]), i["max_bounds"][0] - i["min_bounds"][0], i["max_bounds"][1] - i["min_bounds"][1], linewidth=0.25, edgecolor=color, facecolor='none')
+    else:
+        color = "b"
+        if i["depth"] == selected_depth:
+            ax.scatter(i["barycenter"]["x"], i["barycenter"]["y"], c="orange", alpha=0.5)
+    rect = patches.Rectangle((i["min_bounds"]["x"], i["min_bounds"]["y"]), i["max_bounds"]["x"] - i["min_bounds"]["x"], i["max_bounds"]["y"] - i["min_bounds"]["y"], linewidth=0.25, edgecolor=color, facecolor='none')
     ax.add_patch(rect)
 
 plt.savefig('foo.png')
