@@ -2,6 +2,7 @@
 #include "cell.hpp"
 #include "point.hpp"
 #include "math_utils.hpp"
+#include "centre_of_mass.hpp"
 #include <stddef.h>
 #include <vector>
 #include <algorithm>
@@ -79,6 +80,26 @@ private:
         double d3 = max_bounds.x*max_bounds.x + max_bounds.y*max_bounds.y;
         double d4 = min_bounds.x*min_bounds.x + max_bounds.y*max_bounds.y;
         return d1 < 1.0 && d2 < 1.0 && d3 < 1.0 && d4 < 1.0;
+    }
+
+    void approximate_centers_of_mass(const Point& target, size_t cell_idx, double theta_sq, std::vector<CenterOfMass>& combined_results) {
+        auto& current_cell = _nodes[cell_idx];
+
+        double distance_to_target = target.distance_to_point_poincare(_nodes[cell_idx].barycenter);
+        double distance_squared = distance_to_target * distance_to_target;
+
+        // Check the stop condition
+        if (_nodes[cell_idx].is_leaf || (current_cell.max_distance_within_squared / distance_squared < theta_sq)) {
+            combined_results.emplace_back(CenterOfMass{_nodes[cell_idx].barycenter, _nodes[cell_idx].cumulative_size, distance_squared});
+            return;
+        }
+        
+        // If stop condition wasn't triggered - go deeper and combine results
+        for(int i = 0; i < 4; ++i) {
+            if (_nodes[cell_idx].children_idx[i] != 0) {
+                approximate_centers_of_mass(target, _nodes[cell_idx].children_idx[i], theta_sq, combined_results);
+            }
+        }
     }
 
     std::vector<Cell> _nodes;

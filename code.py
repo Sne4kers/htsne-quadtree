@@ -7,7 +7,7 @@ import numpy as np
 
 
 # generate points
-n = 10000
+n = 500
 
 points = []
 for i in range(n):
