@@ -6,6 +6,8 @@
 #include <stddef.h>
 #include <vector>
 #include <algorithm>
+#include <iostream>
+#include <limits>
 
 class InfinityQuadTree {
 public: 
@@ -20,6 +22,7 @@ public:
 
     void approximate_centers_of_mass(const double& x, const double& y, const double& theta_sq, std::vector<CenterOfMass>& combined_results) {
         approximate_centers_of_mass(Point{x,y}, 0, theta_sq, combined_results);
+        // std::cout << combined_results.size() << std::endl;
     }
 
 private:
@@ -85,22 +88,17 @@ private:
         return result_idx;
     }
 
-    static bool isBoxWithinUnitCircle(const Point& min_bounds, const Point& max_bounds) {
-        double d1 = min_bounds.x*min_bounds.x + min_bounds.y*min_bounds.y;
-        double d2 = max_bounds.x*max_bounds.x + min_bounds.y*min_bounds.y;
-        double d3 = max_bounds.x*max_bounds.x + max_bounds.y*max_bounds.y;
-        double d4 = min_bounds.x*min_bounds.x + max_bounds.y*max_bounds.y;
-        return d1 < 1.0 && d2 < 1.0 && d3 < 1.0 && d4 < 1.0;
-    }
-
     void approximate_centers_of_mass(const Point& target, size_t cell_idx, double theta_sq, std::vector<CenterOfMass>& combined_results) {
         auto& current_cell = _nodes[cell_idx];
+
+        if (current_cell.is_leaf && std::fabs(target.x - current_cell.barycenter.x) < 1e-5 && std::fabs(target.y - current_cell.barycenter.y) < 1e-5) 
+            return;
 
         double distance_to_target = target.distance_to_point_poincare(_nodes[cell_idx].barycenter);
         double distance_squared = distance_to_target * distance_to_target;
 
         // Check the stop condition
-        if (_nodes[cell_idx].is_leaf || (current_cell.max_distance_within_squared / distance_squared < theta_sq)) {
+        if (_nodes[cell_idx].is_leaf || (!current_cell.contains_infinity && (current_cell.max_distance_within_squared / distance_squared < theta_sq))) {
             combined_results.emplace_back(CenterOfMass{_nodes[cell_idx].barycenter, _nodes[cell_idx].cumulative_size, distance_squared});
             return;
         }
@@ -111,6 +109,10 @@ private:
                 approximate_centers_of_mass(target, _nodes[cell_idx].children_idx[i], theta_sq, combined_results);
             }
         }
+    }
+
+    bool isBoxWithinUnitCircle(const Point& min_bounds, const Point& max_bounds) {
+        return hyperbolic_utils::isBoxWithinUnitCircle(min_bounds.x, min_bounds.y, max_bounds.x, max_bounds.y);
     }
 
     std::vector<Cell> _nodes;

@@ -42,7 +42,7 @@ ax.add_patch(pdisk)
 for p in points:
     ax.scatter(p[0], p[1], color="g", s=5)
 
-selected_depth = 1
+selected_depth = 3
 
 for i in my_tree.get_nodes():
     if i["is_leaf"]:

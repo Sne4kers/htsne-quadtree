@@ -1282,20 +1282,6 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include "stdexcept"
 #include "typeinfo"
 #include <vector>
-#include <utility>
-
-    #if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1600)
-    // move should be defined for these versions of MSVC, but __cplusplus isn't set usefully
-    #include <type_traits>
-
-    namespace cython_std {
-    template <typename T> typename std::remove_reference<T>::type&& move(T& t) noexcept { return std::move(t); }
-    template <typename T> typename std::remove_reference<T>::type&& move(T&& t) noexcept { return std::move(t); }
-    }
-
-    #endif
-    
-#include <algorithm>
 #include "point.hpp"
 #include "cell.hpp"
 #include "infinity_quad_tree.hpp"
@@ -1753,8 +1739,8 @@ typedef npy_double __pyx_t_5numpy_double_t;
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
 
-/* "tree.pyx":12
- * from libcpp.algorithm cimport partition
+/* "tree.pyx":11
+ * from libcpp.vector cimport vector
  * 
  * ctypedef cnp.npy_float64 DTYPE_t          # Type of X             # <<<<<<<<<<<<<<
  * ctypedef cnp.npy_intp SIZE_t              # Type for indices and counters
@@ -1762,7 +1748,7 @@ typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
  */
 typedef npy_float64 __pyx_t_4tree_DTYPE_t;
 
-/* "tree.pyx":13
+/* "tree.pyx":12
  * 
  * ctypedef cnp.npy_float64 DTYPE_t          # Type of X
  * ctypedef cnp.npy_intp SIZE_t              # Type for indices and counters             # <<<<<<<<<<<<<<
@@ -1771,7 +1757,7 @@ typedef npy_float64 __pyx_t_4tree_DTYPE_t;
  */
 typedef npy_intp __pyx_t_4tree_SIZE_t;
 
-/* "tree.pyx":14
+/* "tree.pyx":13
  * ctypedef cnp.npy_float64 DTYPE_t          # Type of X
  * ctypedef cnp.npy_intp SIZE_t              # Type for indices and counters
  * ctypedef cnp.npy_int32 INT32_t            # Signed 32 bit integer             # <<<<<<<<<<<<<<
@@ -1780,7 +1766,7 @@ typedef npy_intp __pyx_t_4tree_SIZE_t;
  */
 typedef npy_int32 __pyx_t_4tree_INT32_t;
 
-/* "tree.pyx":15
+/* "tree.pyx":14
  * ctypedef cnp.npy_intp SIZE_t              # Type for indices and counters
  * ctypedef cnp.npy_int32 INT32_t            # Signed 32 bit integer
  * ctypedef cnp.npy_uint32 UINT32_t          # Unsigned 32 bit integer             # <<<<<<<<<<<<<<
@@ -1854,7 +1840,7 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
 
-/* "tree.pyx":45
+/* "tree.pyx":44
  *         vector[Cell] get_nodes()
  * 
  * cdef class PyInfinityQuadTree:             # <<<<<<<<<<<<<<
@@ -2718,12 +2704,6 @@ static PyObject *__pyx_f_4tree_18PyInfinityQuadTree_get_nodes(struct __pyx_obj_4
 
 /* Module declarations from "libcpp.vector" */
 
-/* Module declarations from "libcpp" */
-
-/* Module declarations from "libcpp.utility" */
-
-/* Module declarations from "libcpp.algorithm" */
-
 /* Module declarations from "tree" */
 static PyObject *__pyx_convert_vector_to_py_size_t(std::vector<size_t>  const &); /*proto*/
 static PyObject *__pyx_convert_vector_to_py_struct__Cell(std::vector<struct Cell>  const &); /*proto*/
@@ -2864,12 +2844,6 @@ typedef struct {
   PyTypeObject *__pyx_ptype_5numpy_flexible;
   PyTypeObject *__pyx_ptype_5numpy_character;
   PyTypeObject *__pyx_ptype_5numpy_ufunc;
-  #if CYTHON_USE_MODULE_STATE
-  #endif
-  #if CYTHON_USE_MODULE_STATE
-  #endif
-  #if CYTHON_USE_MODULE_STATE
-  #endif
   #if CYTHON_USE_MODULE_STATE
   #endif
   #if CYTHON_USE_MODULE_STATE
@@ -3230,12 +3204,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_ptype_5numpy_flexible __pyx_mstate_global->__pyx_ptype_5numpy_flexible
 #define __pyx_ptype_5numpy_character __pyx_mstate_global->__pyx_ptype_5numpy_character
 #define __pyx_ptype_5numpy_ufunc __pyx_mstate_global->__pyx_ptype_5numpy_ufunc
-#if CYTHON_USE_MODULE_STATE
-#endif
-#if CYTHON_USE_MODULE_STATE
-#endif
-#if CYTHON_USE_MODULE_STATE
-#endif
 #if CYTHON_USE_MODULE_STATE
 #endif
 #if CYTHON_USE_MODULE_STATE
@@ -4862,7 +4830,7 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   return __pyx_r;
 }
 
-/* "tree.pyx":48
+/* "tree.pyx":47
  *     cdef InfinityQuadTree py_tree
  * 
  *     def __cinit__(self, points):             # <<<<<<<<<<<<<<
@@ -4906,12 +4874,12 @@ static int __pyx_pw_4tree_18PyInfinityQuadTree_1__cinit__(PyObject *__pyx_v_self
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 48, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 47, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4922,7 +4890,7 @@ static int __pyx_pw_4tree_18PyInfinityQuadTree_1__cinit__(PyObject *__pyx_v_self
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 48, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 47, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4967,52 +4935,52 @@ static int __pyx_pf_4tree_18PyInfinityQuadTree___cinit__(struct __pyx_obj_4tree_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 1);
 
-  /* "tree.pyx":50
+  /* "tree.pyx":49
  *     def __cinit__(self, points):
  *         cdef vector[Point] points_vector
  *         for i in range(len(points)):             # <<<<<<<<<<<<<<
- *             points_vector.emplace_back(Point(points[i][0], points[i][1]))
+ *             points_vector.push_back(Point(points[i][0], points[i][1]))
  *         self.py_tree = InfinityQuadTree(points_vector)
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_points); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_points); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 49, __pyx_L1_error)
   __pyx_t_2 = __pyx_t_1;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "tree.pyx":51
+    /* "tree.pyx":50
  *         cdef vector[Point] points_vector
  *         for i in range(len(points)):
- *             points_vector.emplace_back(Point(points[i][0], points[i][1]))             # <<<<<<<<<<<<<<
+ *             points_vector.push_back(Point(points[i][0], points[i][1]))             # <<<<<<<<<<<<<<
  *         self.py_tree = InfinityQuadTree(points_vector)
  * 
  */
-    __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_points, __pyx_v_i, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_points, __pyx_v_i, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_5, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_t_5, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_7 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_6); if (unlikely((__pyx_t_7 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_4.x = __pyx_t_7;
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_points, __pyx_v_i, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_points, __pyx_v_i, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_6, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetItemInt(__pyx_t_6, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_7 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
+    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_7 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_4.y = __pyx_t_7;
     try {
-      __pyx_v_points_vector.emplace_back(__pyx_t_4);
+      __pyx_v_points_vector.push_back(__pyx_t_4);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 51, __pyx_L1_error)
+      __PYX_ERR(0, 50, __pyx_L1_error)
     }
   }
 
-  /* "tree.pyx":52
+  /* "tree.pyx":51
  *         for i in range(len(points)):
- *             points_vector.emplace_back(Point(points[i][0], points[i][1]))
+ *             points_vector.push_back(Point(points[i][0], points[i][1]))
  *         self.py_tree = InfinityQuadTree(points_vector)             # <<<<<<<<<<<<<<
  * 
  *         print("BUILT!")
@@ -5021,36 +4989,36 @@ static int __pyx_pf_4tree_18PyInfinityQuadTree___cinit__(struct __pyx_obj_4tree_
     __pyx_t_8 = InfinityQuadTree(__pyx_v_points_vector);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 52, __pyx_L1_error)
+    __PYX_ERR(0, 51, __pyx_L1_error)
   }
   __pyx_v_self->py_tree = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_8);
 
-  /* "tree.pyx":54
+  /* "tree.pyx":53
  *         self.py_tree = InfinityQuadTree(points_vector)
  * 
  *         print("BUILT!")             # <<<<<<<<<<<<<<
  * 
  *         print(self.py_tree.get_nodes())
  */
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "tree.pyx":56
+  /* "tree.pyx":55
  *         print("BUILT!")
  * 
  *         print(self.py_tree.get_nodes())             # <<<<<<<<<<<<<<
  * 
  *     cpdef get_nodes(self):
  */
-  __pyx_t_5 = __pyx_convert_vector_to_py_struct__Cell(__pyx_v_self->py_tree.get_nodes()); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_5 = __pyx_convert_vector_to_py_struct__Cell(__pyx_v_self->py_tree.get_nodes()); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "tree.pyx":48
+  /* "tree.pyx":47
  *     cdef InfinityQuadTree py_tree
  * 
  *     def __cinit__(self, points):             # <<<<<<<<<<<<<<
@@ -5071,7 +5039,7 @@ static int __pyx_pf_4tree_18PyInfinityQuadTree___cinit__(struct __pyx_obj_4tree_
   return __pyx_r;
 }
 
-/* "tree.pyx":58
+/* "tree.pyx":57
  *         print(self.py_tree.get_nodes())
  * 
  *     cpdef get_nodes(self):             # <<<<<<<<<<<<<<
@@ -5107,7 +5075,7 @@ static PyObject *__pyx_f_4tree_18PyInfinityQuadTree_get_nodes(struct __pyx_obj_4
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_typedict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_4tree_18PyInfinityQuadTree_3get_nodes)) {
         __Pyx_XDECREF(__pyx_r);
@@ -5130,7 +5098,7 @@ static PyObject *__pyx_f_4tree_18PyInfinityQuadTree_get_nodes(struct __pyx_obj_4
           PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
           __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 0+__pyx_t_5);
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         }
@@ -5152,7 +5120,7 @@ static PyObject *__pyx_f_4tree_18PyInfinityQuadTree_get_nodes(struct __pyx_obj_4
     #endif
   }
 
-  /* "tree.pyx":59
+  /* "tree.pyx":58
  * 
  *     cpdef get_nodes(self):
  *         return self.py_tree.get_nodes()             # <<<<<<<<<<<<<<
@@ -5160,13 +5128,13 @@ static PyObject *__pyx_f_4tree_18PyInfinityQuadTree_get_nodes(struct __pyx_obj_4
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_vector_to_py_struct__Cell(__pyx_v_self->py_tree.get_nodes()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_vector_to_py_struct__Cell(__pyx_v_self->py_tree.get_nodes()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "tree.pyx":58
+  /* "tree.pyx":57
  *         print(self.py_tree.get_nodes())
  * 
  *     cpdef get_nodes(self):             # <<<<<<<<<<<<<<
@@ -5238,7 +5206,7 @@ static PyObject *__pyx_pf_4tree_18PyInfinityQuadTree_2get_nodes(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_nodes", 1);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_4tree_18PyInfinityQuadTree_get_nodes(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_4tree_18PyInfinityQuadTree_get_nodes(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5695,8 +5663,8 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 50, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 53, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 68, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(2, 984, __pyx_L1_error)
@@ -5732,28 +5700,28 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "tree.pyx":54
+  /* "tree.pyx":53
  *         self.py_tree = InfinityQuadTree(points_vector)
  * 
  *         print("BUILT!")             # <<<<<<<<<<<<<<
  * 
  *         print(self.py_tree.get_nodes())
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_BUILT); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_u_BUILT); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "tree.pyx":58
+  /* "tree.pyx":57
  *         print(self.py_tree.get_nodes())
  * 
  *     cpdef get_nodes(self):             # <<<<<<<<<<<<<<
  *         return self.py_tree.get_nodes()
  * 
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_tree_pyx, __pyx_n_s_get_nodes, 58, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_tree_pyx, __pyx_n_s_get_nodes, 57, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 57, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
@@ -5856,15 +5824,15 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtabptr_4tree_PyInfinityQuadTree = &__pyx_vtable_4tree_PyInfinityQuadTree;
   __pyx_vtable_4tree_PyInfinityQuadTree.get_nodes = (PyObject *(*)(struct __pyx_obj_4tree_PyInfinityQuadTree *, int __pyx_skip_dispatch))__pyx_f_4tree_18PyInfinityQuadTree_get_nodes;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_4tree_PyInfinityQuadTree = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_4tree_PyInfinityQuadTree_spec, NULL); if (unlikely(!__pyx_ptype_4tree_PyInfinityQuadTree)) __PYX_ERR(0, 45, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_4tree_PyInfinityQuadTree_spec, __pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_ptype_4tree_PyInfinityQuadTree = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_4tree_PyInfinityQuadTree_spec, NULL); if (unlikely(!__pyx_ptype_4tree_PyInfinityQuadTree)) __PYX_ERR(0, 44, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_4tree_PyInfinityQuadTree_spec, __pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   #else
   __pyx_ptype_4tree_PyInfinityQuadTree = &__pyx_type_4tree_PyInfinityQuadTree;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_4tree_PyInfinityQuadTree->tp_print = 0;
@@ -5874,13 +5842,13 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_4tree_PyInfinityQuadTree->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_4tree_PyInfinityQuadTree, __pyx_vtabptr_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_4tree_PyInfinityQuadTree, __pyx_vtabptr_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PyInfinityQuadTree, (PyObject *) __pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PyInfinityQuadTree, (PyObject *) __pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_4tree_PyInfinityQuadTree) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
   #endif
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -6241,16 +6209,16 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "tree.pyx":58
+  /* "tree.pyx":57
  *         print(self.py_tree.get_nodes())
  * 
  *     cpdef get_nodes(self):             # <<<<<<<<<<<<<<
  *         return self.py_tree.get_nodes()
  * 
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_4tree_18PyInfinityQuadTree_3get_nodes, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PyInfinityQuadTree_get_nodes, NULL, __pyx_n_s_tree, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_4tree_18PyInfinityQuadTree_3get_nodes, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PyInfinityQuadTree_get_nodes, NULL, __pyx_n_s_tree, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_4tree_PyInfinityQuadTree, __pyx_n_s_get_nodes, __pyx_t_2) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_4tree_PyInfinityQuadTree, __pyx_n_s_get_nodes, __pyx_t_2) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_4tree_PyInfinityQuadTree);
 

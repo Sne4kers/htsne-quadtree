@@ -7,7 +7,6 @@ import numpy as np
 cimport numpy as cnp
 import cython
 from libcpp.vector cimport vector
-from libcpp.algorithm cimport partition
 
 ctypedef cnp.npy_float64 DTYPE_t          # Type of X
 ctypedef cnp.npy_intp SIZE_t              # Type for indices and counters
@@ -48,7 +47,7 @@ cdef class PyInfinityQuadTree:
     def __cinit__(self, points):
         cdef vector[Point] points_vector
         for i in range(len(points)):
-            points_vector.emplace_back(Point(points[i][0], points[i][1]))
+            points_vector.push_back(Point(points[i][0], points[i][1]))
         self.py_tree = InfinityQuadTree(points_vector)
 
         print("BUILT!")
