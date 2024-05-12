@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import tree
+import qt_tree
 import numpy as np
 
 # Random testing
-experiments = 1000
+experiments = 1
 
 a = 0
 b = 0
@@ -22,14 +23,29 @@ for i in range(n):
     points.append((x, y))
 
     # Add radially pposite node
-    points.append((-x, -y))
+    #points.append((-x, -y))
 
 print("POINTS ", points)
 
 # make the tree
 my_tree = tree.PyInfinityQuadTree(points)
+qt_tree = qt_tree._QuadTree(2, 50)
+
+points_extra = np.array(points)
+print(points_extra.shape)
+qt_tree.build_tree(points_extra)
 print(dir(my_tree))
 print(my_tree.get_nodes())
+
+print("-------------")
+print(my_tree.summarize(np.array([0.0, 0.0]), points_extra, 0.5)[0])
+print(np.asarray(my_tree.summarize(np.array([0.0, 0.0]), points_extra, 0.5)[1]))
+print("-------------")
+print(qt_tree._py_summarize(np.array([0.0, 0.0]), points_extra, 0.5)[0])
+print(np.asarray(qt_tree._py_summarize(np.array([0.0, 0.0]), points_extra, 0.5)[1]))
+print("-------------")
+
+print(qt_tree.get_root()["barycenter"])
 
 # Prepare  the plot
 plt.xlim(-1, 1)

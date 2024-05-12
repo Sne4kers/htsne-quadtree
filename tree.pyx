@@ -40,6 +40,7 @@ cdef extern from "infinity_quad_tree.hpp":
         InfinityQuadTree() except +
         InfinityQuadTree(vector[Point] points) except +
         vector[Cell] get_nodes()
+        size_t approximate_centers_of_mass(double x, double y, double theta_sq, double* combined_results)
 
 cdef class PyInfinityQuadTree:
     cdef InfinityQuadTree py_tree
@@ -57,4 +58,16 @@ cdef class PyInfinityQuadTree:
     cpdef get_nodes(self):
         return self.py_tree.get_nodes()
 
+    cpdef summarize(self, DTYPE_t[:] query_pt, DTYPE_t[:, :] X, float theta):
+        # Used for testing summarize
+        cdef:
+            DTYPE_t[:] summary
+            int n_samples, n_dimensions
+
+        n_samples = X.shape[0]
+        n_dimensions = X.shape[1]
+        summary = np.zeros(4 * n_samples, dtype=np.float64)
+
+        idx = self.py_tree.approximate_centers_of_mass(query_pt[0], query_pt[1], theta * theta, &summary[0])
+        return idx, summary
 
