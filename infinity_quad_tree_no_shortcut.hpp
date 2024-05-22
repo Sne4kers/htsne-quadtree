@@ -8,15 +8,15 @@
 #include <algorithm>
 #include <iostream>
 
-class InfinityQuadTree {
+class InfinityQuadTreeNoShortcut {
 public: 
-    InfinityQuadTree(std::vector<Point>& points) {
+    InfinityQuadTreeNoShortcut(std::vector<Point>& points) {
         std::cout.precision(12);
         std::cout << "BEGIN BUILDING" << std::endl;
         rec_build_tree(points.begin(), points.end(), Point{-1, -1}, Point{1, 1}, 0);
         std::cout << "END BUILDING" << std::endl;
     }
-    InfinityQuadTree() {}
+    InfinityQuadTreeNoShortcut() {}
 
     std::vector<Cell> get_nodes() {
         return _nodes;
@@ -61,12 +61,6 @@ private:
         int child1_idx = rec_build_tree(split_x_upper, end_points, bb_center, max_bounds, depth + 1);
         int child2_idx = rec_build_tree(begin_points, split_x_lower, min_bounds, bb_center, depth + 1);
         int child3_idx = rec_build_tree(split_x_lower, split_y, Point{bb_center.x, min_bounds.y}, Point{max_bounds.x, bb_center.y}, depth + 1);
-    
-        int only_child = std::max(std::max(child0_idx, child1_idx), std::max(child2_idx, child3_idx));
-
-        if ((child0_idx + child1_idx + child2_idx + child3_idx) == (only_child - 3)) {
-            return only_child;
-        }
 
         int result_idx = _nodes.size();
         _nodes.emplace_back(Cell(depth, min_bounds, max_bounds));

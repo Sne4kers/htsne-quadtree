@@ -28,6 +28,7 @@ for i in range(n):
 print("POINTS ", points)
 
 # make the tree
+my_tree_no_shortcut = tree.PyInfinityQuadTreeNoShortcut(points)
 my_tree = tree.PyInfinityQuadTree(points)
 qt_tree = qt_tree._QuadTree(2, 50)
 
@@ -36,14 +37,14 @@ print(points_extra.shape)
 qt_tree.build_tree(points_extra)
 print(dir(my_tree))
 print(my_tree.get_nodes())
-
-print("-------------")
-print(my_tree.summarize(np.array([0.0, 0.0]), points_extra, 0.5)[0])
-print(np.asarray(my_tree.summarize(np.array([0.0, 0.0]), points_extra, 0.5)[1]))
-print("-------------")
-print(qt_tree._py_summarize(np.array([0.0, 0.0]), points_extra, 0.5)[0])
-print(np.asarray(qt_tree._py_summarize(np.array([0.0, 0.0]), points_extra, 0.5)[1]))
-print("-------------")
+plt.rcParams.update({'font.size': 22})
+# print("-------------")
+# print(my_tree.summarize(np.array([0.0, 0.0]), points_extra, 0.5)[0])
+# print(np.asarray(my_tree.summarize(np.array([0.0, 0.0]), points_extra, 0.5)[1]))
+# print("-------------")
+# print(qt_tree._py_summarize(np.array([0.0, 0.0]), points_extra, 0.5)[0])
+# print(np.asarray(qt_tree._py_summarize(np.array([0.0, 0.0]), points_extra, 0.5)[1]))
+# print("-------------")
 
 print(qt_tree.get_root()["barycenter"])
 
@@ -54,6 +55,7 @@ plt.ylim(-1, 1)
 #plt.gca().set_aspect('equal')
 
 fig, ax = plt.subplots()
+plt.title("Tree with shortcuts")
 
 fig.set_figheight(15)
 fig.set_figwidth(15)
@@ -63,7 +65,7 @@ pdisk = patches.Circle((0, 0), 1, linewidth=1, edgecolor='b', facecolor='none')
 ax.add_patch(pdisk)
 
 for p in points:
-    ax.scatter(p[0], p[1], color="g", s=5)
+    ax.scatter(p[0], p[1], color="g", s=10)
 
 selected_depth = 3
 
@@ -74,11 +76,41 @@ for i in my_tree.get_nodes():
         color = "b"
         if i["depth"] == 0:
             print(i["barycenter"]["x"], i["barycenter"]["y"])
-    ax.scatter(i["barycenter"]["x"], i["barycenter"]["y"], c="orange", alpha=0.5)
-    rect = patches.Rectangle((i["min_bounds"]["x"], i["min_bounds"]["y"]), i["max_bounds"]["x"] - i["min_bounds"]["x"], i["max_bounds"]["y"] - i["min_bounds"]["y"], linewidth=0.25, edgecolor=color, facecolor='none')
+    #ax.scatter(i["barycenter"]["x"], i["barycenter"]["y"], c="orange", alpha=0.5)
+    rect = patches.Rectangle((i["min_bounds"]["x"], i["min_bounds"]["y"]), i["max_bounds"]["x"] - i["min_bounds"]["x"], i["max_bounds"]["y"] - i["min_bounds"]["y"], linewidth=1, edgecolor=color, facecolor='none')
     ax.add_patch(rect)
 
-plt.savefig('foo.png')
+plt.savefig('shortcut.png')
+plt.clf()
+
+fig, ax = plt.subplots()
+plt.title("Tree without shortcuts")
+
+fig.set_figheight(15)
+fig.set_figwidth(15)
+
+
+pdisk = patches.Circle((0, 0), 1, linewidth=1, edgecolor='b', facecolor='none')
+ax.add_patch(pdisk)
+
+for p in points:
+    ax.scatter(p[0], p[1], color="g", s=10)
+
+selected_depth = 3
+
+for i in my_tree_no_shortcut.get_nodes():
+    if i["is_leaf"]:
+        color = "r"
+    else:
+        color = "b"
+        if i["depth"] == 0:
+            print(i["barycenter"]["x"], i["barycenter"]["y"])
+    #ax.scatter(i["barycenter"]["x"], i["barycenter"]["y"], c="orange", alpha=0.5)
+    rect = patches.Rectangle((i["min_bounds"]["x"], i["min_bounds"]["y"]), i["max_bounds"]["x"] - i["min_bounds"]["x"], i["max_bounds"]["y"] - i["min_bounds"]["y"], linewidth=1, edgecolor=color, facecolor='none')
+    ax.add_patch(rect)
+
+plt.savefig('no_shortcut.png')
+
 # a /= experiments
 # b /= experiments
 # print("FINAL RESULTS ", a, b)
